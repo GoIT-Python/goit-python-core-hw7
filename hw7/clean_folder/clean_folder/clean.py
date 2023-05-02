@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 from parse import parse
-from normalize import normalize
+from name_handler import normalize
 
 ext = {
     "images": ["JPEG", "PNG", "JPG", "SVG"],
