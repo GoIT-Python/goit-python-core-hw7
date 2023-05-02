@@ -126,3 +126,4 @@ def sort(path):
 if __name__ == "__main__":
     path = Path(sys.argv[1])
     sort(path)
+    print(path.absolute())

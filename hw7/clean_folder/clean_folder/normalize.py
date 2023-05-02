@@ -1,10 +1,14 @@
 from re import sub
-from transliterate import get_translit_function
+from transliterate.decorators import transliterate_function
 
-translit_uk = get_translit_function("uk")
+
+@transliterate_function(language_code="uk", reversed=True)
+def translit(text):
+    return text
+
 
 regex = r"[^a-zA-Z0-9]"
 
 
 def normalize(text):
-    return sub(regex, "_", translit_uk(f"{text}", reversed=True))
+    return sub(regex, "_", translit(f"{text}"))

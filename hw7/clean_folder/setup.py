@@ -9,6 +9,6 @@ setup(
     author_email="mail@mail.com",
     license="MIT",
     packages=find_namespace_packages(),
-    install_requires=["parse", "normalize", "transliterate"],
+    install_requires=["parse", "normalize"],
     entry_points={"console_scripts": ["clean-folder = clean_folder.clean:sort"]},
 )
