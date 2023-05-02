@@ -2,9 +2,11 @@ import os
 import shutil
 import sys
 from pathlib import Path
+from re import sub
+from transliterate.decorators import transliterate_function
 
-from parse import parse
-from name_handler import normalize
+# from parse_handler import parse
+# from name_handler import normalize
 
 ext = {
     "images": ["JPEG", "PNG", "JPG", "SVG"],
@@ -16,6 +18,26 @@ ext = {
 }
 
 output = "target"
+
+
+def parse(path):
+    fname = []
+    for root, _, f_names in os.walk(path):
+        for f in f_names:
+            fname.append(os.path.join(root, f))
+    return fname
+
+
+@transliterate_function(language_code="uk", reversed=True)
+def translit(text):
+    return text
+
+
+regex = r"[^a-zA-Z0-9]"
+
+
+def normalize(text):
+    return sub(regex, "_", translit(f"{text}"))
 
 
 def rename(file, path):
@@ -97,12 +119,13 @@ def handle_output(output):
 
     print(f"Target Directory Items Dict: {output_dict}")
     print(
-        f"Target Directory Known Extentions List: {set(output_ext)}",
+        f"Target Directory Known Extentions List: {output_ext}",
     )
     print(f"Target Directory Alien Extentions List: {alien_ext}")
 
 
-def sort(path):
+def sort():
+    path = Path(sys.argv[1])
     if os.path.exists(path):
         dest = os.path.join(path.parent, output)
         make_dir(dest)
@@ -122,8 +145,3 @@ def sort(path):
 
         handle_output(dest)
 
-
-if __name__ == "__main__":
-    path = Path(sys.argv[1])
-    sort(path)
-    print(path.absolute())
