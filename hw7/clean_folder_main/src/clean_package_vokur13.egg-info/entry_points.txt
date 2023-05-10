@@ -1,2 +1,0 @@
-[console_scripts]
-clean_f = clean_package_vokur13.clean:sort
